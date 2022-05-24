@@ -8,12 +8,12 @@ import { validarEmail, validarSenha, validarNome, validarConfirmacaoSenha } from
 
 import imagemEnvelope from "../../public/imagens/envelope.svg";
 import imagemChave from "../../public/imagens/chave.svg";
+import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg";
 
-//const usuarioService = new UsuarioService();
+const usuarioService = new UsuarioService();
 
   export default function Cadastro() {
 
-    const [imagem, setImagem] = useState(null);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -57,23 +57,9 @@ import imagemChave from "../../public/imagens/chave.svg";
 
     return (
         <section className={'paginaCadastro paginaPublica'}>
-            <div className="logoContainer desktop">
-                <Image
-                    src={imagemLogo}
-                    alt="logotipo"
-                    layout="fill"
-                    className="logo"
-                />
-            </div>
 
             <div className="conteudoPaginaPublica">
                 <form onSubmit={aoSubmeter}>
-                    <UploadImagem 
-                        imagemPreviewClassName="avatar avatarPreview"
-                        imagemPreview={imagem?.preview || imagemAvatar.src }
-                        setImagem={setImagem}
-                    />
-
 
                     <InputPublico
                         imagem={imagemUsuarioAtivo}
@@ -126,7 +112,7 @@ import imagemChave from "../../public/imagens/chave.svg";
 
                 <div className="rodapePaginaPublica">
                     <p>já possui uma Conta?</p>
-                    <Link href="/"> Faça seu login agora!</Link>
+                    <Link href="/login"> Faça seu login agora!</Link>
                 </div>
             </div>
 
