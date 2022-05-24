@@ -4,7 +4,7 @@ import Link from "next/link";
 import Botao from "../../componentes/botao";
 import InputPublico from "../../componentes/inputPublico";
 import { validarEmail, validarSenha, validarNome, validarConfirmacaoSenha } from '../../utils/validadores'
-//import UsuarioService from "../../services/UsuarioService";
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemEnvelope from "../../public/imagens/envelope.svg";
 import imagemChave from "../../public/imagens/chave.svg";
@@ -19,6 +19,15 @@ const usuarioService = new UsuarioService();
     const [senha, setSenha] = useState("");
     const [confirmacaoSenha, setConfirmacaoSenha] = useState(""); 
     const [estaSubmetendo, setEstaSubmetendo] = useState(false);
+    
+    const validarFormulario = () => {
+      return (
+          validarNome(nome) 
+          && validarEmail(email) 
+          && validarSenha(senha) 
+          && validarConfirmacaoSenha(senha, confirmacaoSenha)
+      );
+    }
 
     const aoSubmeter= async (e) => {
         e.preventDefault();
@@ -34,47 +43,41 @@ const usuarioService = new UsuarioService();
             corpoReqCadastro.append("email", email);
             corpoReqCadastro.append("senha", senha);
 
-            if (imagem?.arquivo) {
-                corpoReqCadastro.append("file", imagem.arquivo);
-            }
-
             await usuarioService.cadastro(corpoReqCadastro);
             alert ('Sucesso!')
         }catch(error){
             alert(
-                "erro ao cadastrar usuario." + error?.response?.data?.erro
+                "erro ao cadastrar usuario. " + error?.response?.data?.erro
             );
         }
 
         setEstaSubmetendo(false);
     }
 
-      const validarFormulario = () => {
-          return (
-              validarEmail(email) && validarSenha(senha) && validarNome(nome) && validarConfirmacaoSenha(senha, confirmacaoSenha)
-          );
-      };
 
     return (
         <section className={'paginaCadastro paginaPublica'}>
 
             <div className="conteudoPaginaPublica">
+
+            <h1>Cadastro</h1>
+
                 <form onSubmit={aoSubmeter}>
 
                     <InputPublico
                         imagem={imagemUsuarioAtivo}
                         texto={"Nome Completo"}
-                        tipo="text"
+                        type="text"
                         aoAlterarValor={e => setNome(e.target.value)}
                         valor={nome}
-                        mensagemValidacao="Precisa ter ao menos 3 caracteres"
+                        mensagemValidacao="Precisa ter ao menos 2 caracteres"
                         exibirMensagemValidacao={nome && !validarNome(nome)}
                     />
 
                     <InputPublico
                         imagem={imagemEnvelope}
                         texto={"E-mail"}
-                        tipo="email"
+                        type="email"
                         aoAlterarValor={e => setEmail(e.target.value)}
                         valor={email}
                         mensagemValidacao="O endereço informado é invalido"
@@ -84,7 +87,7 @@ const usuarioService = new UsuarioService();
                     <InputPublico
                         imagem={imagemChave}
                         texto={"Senha"}
-                        tipo="password"
+                        type="password"
                         aoAlterarValor={e => setSenha(e.target.value)}
                         valor={senha}
                         mensagemValidacao="Precisa ter ao menos 4 caracteres"
@@ -94,7 +97,7 @@ const usuarioService = new UsuarioService();
                     <InputPublico
                         imagem={imagemChave}
                         texto={"Confirmar Senha"}
-                        tipo="password"
+                        type="password"
                         aoAlterarValor={e => setConfirmacaoSenha(e.target.value)}
                         valor={confirmacaoSenha}
                         mensagemValidacao="Precisa ser identica a senha"
@@ -104,8 +107,8 @@ const usuarioService = new UsuarioService();
 
                     <Botao
                         texto="Cadastrar"
-                        tipo="submit"
-                        desabilitado={!validarFormulario() || estaSubmetendo}
+                        type="submit"
+                        disabled={!validarFormulario() || estaSubmetendo}
                     />
                 </form>
 

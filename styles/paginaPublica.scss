@@ -4,8 +4,18 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    padding: 0 32px;
+    padding: 0 30px;
     background-image: url(../public/imagens/background.png);
+
+    h1 {
+        text-align: center;
+        font-size: 30px;
+        color: $corPrimaria2;
+        font-family: $fontBold;
+
+    }
+        
+    
 
     .conteudoPaginaPublica {
         width: 100%;

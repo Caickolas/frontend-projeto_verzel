@@ -4,12 +4,12 @@ import Botao from "../../componentes/botao";
 import Link from "next/link";
 import { useState } from "react";
 import {validarEmail, validarSenha } from '../../utils/validadores'
-//import UsuarioService from "../../services/UsuarioService";
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemEnvelope from "../../public/imagens/envelope.svg"
 import imagemChave from "../../public/imagens/chave.svg"
 
-//const usuarioService = new UsuarioService();
+const usuarioService = new UsuarioService();
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ export default function Login() {
                 login: email,
                 senha
             });
-
+            alert ('sucesso')
         } catch (error) {
             alert(
                 "erro ao logar usuario." + error?.response?.data?.erro
@@ -47,8 +47,11 @@ export default function Login() {
     }
 
     return (
-        <section className={'paginaLogin paginaPublica'}>            
+        <section className={'paginaLogin paginaPublica'}>     
             <div className="conteudoPaginaPublica">
+        
+            <h1>Login</h1>
+               
                 <form onSubmit={aoSubmeter}>
                     <InputPublico
                         imagem = {imagemEnvelope}
@@ -72,8 +75,8 @@ export default function Login() {
 
                     <Botao 
                     texto="Login"
-                    tipo="submit"
-                        desabilitado={!validarFormulario() || estaSubmetendo }
+                    type="submit"
+                    disabled={!validarFormulario() || estaSubmetendo }
                     />
                 </form>
 
