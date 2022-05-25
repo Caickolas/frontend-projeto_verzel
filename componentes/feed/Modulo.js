@@ -1,7 +1,7 @@
 export default function Modulo(props) {
     return (
         <h1>
-            Modulo : xereca
+            Modulo
             
         </h1>
     )
