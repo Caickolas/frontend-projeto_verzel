@@ -1,8 +1,9 @@
-import InputPublico from "../../componentes/inputPublico";
+import InputPublico from "../inputPublico";
 import Image from "next/image";
-import Botao from "../../componentes/botao";
+import Botao from "../botao";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import {validarEmail, validarSenha } from '../../utils/validadores'
 import UsuarioService from "../../services/UsuarioService";
 
@@ -36,7 +37,10 @@ export default function Login() {
                 login: email,
                 senha
             });
-            alert ('sucesso')
+
+            const router = useRouter();
+            
+            router.push('/');
         } catch (error) {
             alert(
                 "erro ao logar usuario." + error?.response?.data?.erro
